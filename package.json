@@ -21,5 +21,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "monthly balance app using react and gulp",
+  "main": "index.js",
+  "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
