@@ -8,14 +8,14 @@ const chart = (props) => (
             <h1>Chart</h1>
 
             <Doughnut data={{
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-        label: "My First dataset",
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    }  }
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                label: "My First dataset",
+                backgroundColor: ['Red', 'Green', 'Blue'],
+                borderColor: 'rgb(255, 99, 100)',
+                data: [0, 10, 5, 2, 20, 30, 45],}]
+                }}
+                options={{legend:{display: false}}}
             />
         </Paper>
     </div>
