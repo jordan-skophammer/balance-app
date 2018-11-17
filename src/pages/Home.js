@@ -4,11 +4,26 @@ import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Chart from '../components/chart';
 
+//Styling
 const centerItem = {
     textAlign: 'center'
 }
 
 class Home extends Component {
+
+    state = {
+        data: {}
+    }
+
+    componentDidMount() {
+        this.getDataFromDb();
+    }
+
+    getDataFromDb = () => {
+        fetch("/api/getData")
+            .then(data => data.json())
+            .then(res => this.setState({ data: res.data }));
+    };
 
     render() {
         return(
