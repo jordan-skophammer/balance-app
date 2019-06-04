@@ -21,7 +21,7 @@ class Home extends Component {
 
     getDataFromDb = () => {
         fetch("/api/getData")
-            .then(data => data.json())
+            // .then(data => data.json())
             .then(res => this.setState({ data: res.data }));
     };
 
@@ -35,7 +35,7 @@ class Home extends Component {
                     <Grid item xs={2}><Icon>perm_identity</Icon></Grid>
                     
                     {/* Totals Chart */}
-                    <Grid item xs={12}><Chart /></Grid>
+                    {/* <Grid item xs={12}><Chart /></Grid> */}
 
                     {/* Menu Item */}
                     <Grid item xs={12}><Paper>Expenses</Paper></Grid>
