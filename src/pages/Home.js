@@ -55,14 +55,16 @@ class Home extends Component {
                     <Grid container style={centerItem} alignItems="center" item xs={12}>
                         <Paper>Expenses</Paper>
                         <div className="DynamicInput">
-                            {this.state.inputs.map(input => <TextField
-                            key={input}
+                            {this.state.inputs.map(input => <Grid item xs={12} key={input}><TextField
+                            
+                            direction="row"
+                            xs={12}
                             id="outlined-bare"
                             defaultValue="Bare"
                             margin="normal"
                             variant="outlined"
                             inputProps={{ 'aria-label': 'bare' }}
-                        />)}
+                        /></Grid>)}
                         </div>
                         <Button variant="contained" color="primary" onClick={() => this.addInput()}>Add</Button>
                     </Grid>
