@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Chart from '../components/chart';
 
 //Styling
@@ -38,7 +40,17 @@ class Home extends Component {
                     {/* <Grid item xs={12}><Chart /></Grid> */}
 
                     {/* Menu Item */}
-                    <Grid item xs={12}><Paper>Expenses</Paper></Grid>
+                    <Grid direction="row" item xs={12}>
+                        <Paper>Expenses</Paper>
+                        <TextField
+                            id="outlined-bare"
+                            defaultValue="Bare"
+                            margin="normal"
+                            variant="outlined"
+                            inputProps={{ 'aria-label': 'bare' }}
+                        />
+                        <Button variant="contained" color="primary">Add</Button>
+                    </Grid>
                     <Grid item xs={12}><Paper>Budget</Paper></Grid>
                     <Grid item xs={12}><Paper>Savings</Paper></Grid>
                     <Grid item xs={12}><Paper>Debt</Paper></Grid>

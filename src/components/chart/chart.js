@@ -15,7 +15,7 @@ const chart = (props) => (
                 borderColor: 'rgb(255, 99, 100)',
                 data: [0, 10, 5, 2, 20, 30, 45],}]
                 }}
-                options={{legend:{display: false}}}
+                options={{legend:{display: true}}}
             />
         </Paper>
     </div>
