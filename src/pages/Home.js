@@ -11,10 +11,15 @@ const centerItem = {
     textAlign: 'center'
 }
 
+// const addInput = () => {
+//     console.log("clicked")
+// }
+
 class Home extends Component {
 
     state = {
-        data: {}
+        data: {},
+        inputs: ['input0']
     }
 
     componentDidMount() {
@@ -27,9 +32,16 @@ class Home extends Component {
             .then(res => this.setState({ data: res.data }));
     };
 
+    addInput() {
+        let newInput = this.state.inputs.length
+
+        this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
+
+        console.log(newInput)
+    }
+
     render() {
         return(
-            
                 <Grid container style={centerItem} direction="row" justify="space-between" alignItems="center" spacing={16}>
                     {/* Navbar */}
                     <Grid item xs={2}><Icon>home</Icon></Grid>
@@ -40,16 +52,19 @@ class Home extends Component {
                     {/* <Grid item xs={12}><Chart /></Grid> */}
 
                     {/* Menu Item */}
-                    <Grid direction="row" item xs={12}>
+                    <Grid container style={centerItem} alignItems="center" item xs={12}>
                         <Paper>Expenses</Paper>
-                        <TextField
+                        <div className="DynamicInput">
+                            {this.state.inputs.map(input => <TextField
+                            key={input}
                             id="outlined-bare"
                             defaultValue="Bare"
                             margin="normal"
                             variant="outlined"
                             inputProps={{ 'aria-label': 'bare' }}
-                        />
-                        <Button variant="contained" color="primary">Add</Button>
+                        />)}
+                        </div>
+                        <Button variant="contained" color="primary" onClick={() => this.addInput()}>Add</Button>
                     </Grid>
                     <Grid item xs={12}><Paper>Budget</Paper></Grid>
                     <Grid item xs={12}><Paper>Savings</Paper></Grid>
@@ -58,6 +73,7 @@ class Home extends Component {
                 </Grid>
             
         )
+        
     }
 }
 
