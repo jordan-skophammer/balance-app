@@ -4,6 +4,7 @@ import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Chart from '../components/chart';
 
 //Styling
@@ -36,8 +37,10 @@ class Home extends Component {
         let newInput = this.state.inputs.length
 
         this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
+    }
 
-        console.log(newInput)
+    showInput(event) {
+        console.log(event.target.value)
     }
 
     render() {
@@ -54,18 +57,36 @@ class Home extends Component {
                     {/* Menu Item */}
                     <Grid container style={centerItem} alignItems="center" item xs={12}>
                         <Paper>Expenses</Paper>
-                        <div className="DynamicInput">
-                            {this.state.inputs.map(input => <Grid item xs={12} key={input}><TextField
-                            
-                            direction="row"
-                            xs={12}
-                            id="outlined-bare"
-                            defaultValue="Bare"
-                            margin="normal"
-                            variant="outlined"
-                            inputProps={{ 'aria-label': 'bare' }}
-                        /></Grid>)}
-                        </div>
+                        
+                            {this.state.inputs.map(input => 
+                            <Grid item xs={12} key={input}>
+                                <div className="DynamicInput">
+                                    <TextField onChange={this.showInput}
+                                    className="label"
+                                    placeholder="Label"
+                                    direction="row"
+                                    xs={12}
+                                    id="outlined-bare"
+                                    defaultValue=""
+                                    margin="normal"
+                                    variant="outlined"
+                                    inputProps={{ 'aria-label': 'bare' }}
+                                    />
+                                    <TextField 
+                                    placeholder="Amount"  
+                                    direction="row"
+                                    xs={12}
+                                    id="outlined-bare"
+                                    defaultValue=""
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputProps={{
+                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                    }}
+                                />
+                                </div>
+                            </Grid>)}
+                        
                         <Button variant="contained" color="primary" onClick={() => this.addInput()}>Add</Button>
                     </Grid>
                     <Grid item xs={12}><Paper>Budget</Paper></Grid>
