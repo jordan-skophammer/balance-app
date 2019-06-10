@@ -18,10 +18,22 @@ const centerItem = {
 
 class Home extends Component {
 
-    state = {
-        data: {},
-        inputs: ['input0']
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            inputs: [
+                {
+                    label: 'label 1',
+                    amount: 'amount 1'
+                }
+            
+            ]
+        }
+
+        this.changeAmount = this.changeAmount.bind(this)
     }
+    
 
     componentDidMount() {
         this.getDataFromDb();
@@ -33,15 +45,25 @@ class Home extends Component {
             .then(res => this.setState({ data: res.data }));
     };
 
-    addInput() {
-        let newInput = this.state.inputs.length
+    // addInput(event) {
+    //     new inputObject() 
+        
+    //     this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
 
-        this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
+    //     console.log(event.target.id)
+    // }
+
+    changeAmount(event) {
+        let newAmount = event.target.value
+
+        // this.setState({...this.state, inputs: {amount: newVaule}})
+
+        console.log(newAmount)
     }
 
-    showInput(event) {
-        console.log(event.target.value)
-    }
+    // totalSum = () => {
+
+    // }
 
     render() {
         return(
@@ -57,42 +79,40 @@ class Home extends Component {
                     {/* Menu Item */}
                     <Grid container style={centerItem} alignItems="center" item xs={12}>
                         <Paper>Expenses</Paper>
-                        
-                            {this.state.inputs.map(input => 
-                            <Grid item xs={12} key={input}>
-                                <div className="DynamicInput">
-                                    <TextField onChange={this.showInput}
-                                    className="label"
-                                    placeholder="Label"
-                                    direction="row"
-                                    xs={12}
-                                    id="outlined-bare"
-                                    defaultValue=""
-                                    margin="normal"
-                                    variant="outlined"
-                                    inputProps={{ 'aria-label': 'bare' }}
-                                    />
-                                    <TextField 
-                                    placeholder="Amount"  
-                                    direction="row"
-                                    xs={12}
-                                    id="outlined-bare"
-                                    defaultValue=""
-                                    margin="normal"
-                                    variant="outlined"
-                                    InputProps={{
-                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                    }}
+                        <div>
+                            {this.state.inputs.map(id => 
+                            <Grid item xs={12} key={id}>
+                                <TextField onChange={this.changeAmount}
+                                className="label"
+                                placeholder="Label"
+                                direction="row"
+                                xs={12}
+                                id="outlined-bare"
+                                defaultValue=""
+                                margin="normal"
+                                variant="outlined"
+                                inputProps={{ 'aria-label': 'bare' }}
                                 />
-                                </div>
+                                <TextField onChange={this.changeAmount}
+                                placeholder="Amount"  
+                                direction="row"
+                                xs={12}
+                                id="outlined-bare"
+                                defaultValue=""
+                                margin="normal"
+                                variant="outlined"
+                                InputProps={{
+                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                }}
+                                />
                             </Grid>)}
-                        
-                        <Button variant="contained" color="primary" onClick={() => this.addInput()}>Add</Button>
+                        </div>
+                        <Button variant="contained" color="primary" onClick={this.addInput}>Add</Button>
                     </Grid>
-                    <Grid item xs={12}><Paper>Budget</Paper></Grid>
-                    <Grid item xs={12}><Paper>Savings</Paper></Grid>
+                    <Grid item xs={12}><Paper>Total = </Paper></Grid>
+                    {/* <Grid item xs={12}><Paper>Savings</Paper></Grid>
                     <Grid item xs={12}><Paper>Debt</Paper></Grid>
-                    <Grid item xs={12}><Paper>Assets</Paper></Grid>
+                    <Grid item xs={12}><Paper>Assets</Paper></Grid> */}
                 </Grid>
             
         )
