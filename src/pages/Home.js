@@ -24,7 +24,8 @@ class Home extends Component {
       items: {
         label: 1,
         label2: 2
-      }
+      },
+      total: 100
     };
 
     // this.changeAmount = this.changeAmount.bind(this)
@@ -49,11 +50,10 @@ class Home extends Component {
   // }
 
   changeAmount(event) {
-    let newAmount = event.target.value;
+    let newInput = event.target.value;
+    Object.keys(this.state.items).map(i => this.setState({ [i]: newInput }));
 
-    // this.setState({...this.state, inputs: {amount: newVaule}})
-
-    console.log(newAmount);
+    console.log(this.state);
   }
 
   // totalSum = () => {
@@ -126,7 +126,7 @@ class Home extends Component {
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <Paper>Total = </Paper>
+          <Paper>Total {this.state.total}</Paper>
         </Grid>
         {/* <Grid item xs={12}><Paper>Savings</Paper></Grid>
                     <Grid item xs={12}><Paper>Debt</Paper></Grid>
