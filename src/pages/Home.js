@@ -90,7 +90,7 @@ class Home extends Component {
         <Grid container style={centerItem} alignItems="center" item xs={12}>
           <Paper>Expenses</Paper>
           <div>
-            {Object.keys(this.state.items).map(item => (
+            {Object.keys(this.state).map(item => (
               <Grid item xs={12} key={item}>
                 <TextField
                   onChange={this.changeAmount}
