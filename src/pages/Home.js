@@ -6,15 +6,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Chart from "../components/chart";
+import { set } from "mongoose";
 
 //Styling
 const centerItem = {
   textAlign: "center"
 };
-
-// const addInput = () => {
-//     console.log("clicked")
-// }
 
 class Home extends Component {
   constructor(props) {
@@ -22,17 +19,23 @@ class Home extends Component {
 
     this.state = {
       items: {
-        label: 1,
-        label2: 2
+        label: '1',
+        label2: '2'
       },
       total: 100
     };
 
-    // this.changeAmount = this.changeAmount.bind(this)
+    this.changeAmount = this.changeAmount.bind(this)
+    this.totalSum = this.totalSum.bind(this)
   }
 
   componentDidMount() {
     this.getDataFromDb();
+    this.totalSum();
+  }
+
+  componentDidUpdate() {
+      this.totalSum()
   }
 
   getDataFromDb = () => {
@@ -49,17 +52,17 @@ class Home extends Component {
   //     console.log(event.target.id)
   // }
 
+
+
+  totalSum() {
+    console.log(this.state)
+  }
   changeAmount(event) {
     let newInput = event.target.value;
-    Object.keys(this.state.items).map(i => this.setState({ [i]: newInput }));
-
-    console.log(this.state);
+    
+    
+    
   }
-
-  // totalSum = () => {
-
-  // }
-
   render() {
     return (
       <Grid
