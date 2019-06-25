@@ -1,43 +1,38 @@
 import React, { Component } from "react";
-
+import { Button, Card, Row, Col, Container } from 'react-materialize';
 import Chart from "../components/chart";
 import { set } from "mongoose";
 
-//Styling
-const centerItem = {
-  textAlign: "center"
-};
-
 class Home extends Component {
-  constructor(props) {
+constructor(props) {
     super(props);
 
     this.state = {
-      items: {
+    items: {
         label: '1',
         label2: '2'
-      },
-      total: 100
+    },
+    total: 100
     };
 
     this.changeAmount = this.changeAmount.bind(this)
     this.totalSum = this.totalSum.bind(this)
-  }
+}
 
-  componentDidMount() {
+componentDidMount() {
     this.getDataFromDb();
     this.totalSum();
-  }
+}
 
-  componentDidUpdate() {
-      this.totalSum()
-  }
+componentDidUpdate() {
+    this.totalSum()
+}
 
-  getDataFromDb = () => {
-    fetch("/api/getData")
-      // .then(data => data.json())
-      .then(res => this.setState({ data: res.data }));
-  };
+getDataFromDb = () => {
+fetch("/api/getData")
+    // .then(data => data.json())
+    .then(res => this.setState({ data: res.data }));
+};
 
   // addInput(event) {
   //     new inputObject()
@@ -49,87 +44,68 @@ class Home extends Component {
 
 
 
-  totalSum() {
-    console.log(this.state)
-  }
-  changeAmount(event) {
-    let newInput = event.target.value;
-    
-    
-    
-  }
-  render() {
+totalSum() {
+console.log(this.state)
+}
+changeAmount(event) {
+let newInput = event.target.value;
+
+
+
+}
+render() {
     return (
-      <Grid
-        container
-        style={centerItem}
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        spacing={16}
-      >
-        {/* Navbar */}
-        <Grid item xs={2}>
-          <Icon>home</Icon>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper>
-            <h3>Balance</h3>
-          </Paper>
-        </Grid>
-        <Grid item xs={2}>
-          <Icon>perm_identity</Icon>
-        </Grid>
-
-        {/* Totals Chart */}
-        {/* <Grid item xs={12}><Chart /></Grid> */}
-
-        {/* Menu Item */}
-        <Grid container style={centerItem} alignItems="center" item xs={12}>
-          <Paper>Expenses</Paper>
-          <div>
-            {Object.keys(this.state.items).map(item => (
-              <Grid item xs={12} key={item}>
-                <TextField
-                  onChange={this.changeAmount}
-                  className="label"
-                  placeholder={item}
-                  direction="row"
-                  xs={12}
-                  id="outlined-bare"
-                  defaultValue=""
-                  margin="normal"
-                  variant="outlined"
-                  inputProps={{ "aria-label": "bare" }}
-                />
-                <TextField
-                  onChange={this.changeAmount}
-                  placeholder={this.state.items[item]}
-                  direction="row"
-                  xs={12}
-                  id="outlined-bare"
-                  margin="normal"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    )
-                  }}
-                />
-              </Grid>
-            ))}
-          </div>
-          <Button variant="contained" color="primary" onClick={this.addInput}>
-            Add
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper>Total {this.state.total}</Paper>
-        </Grid>
-        {/* <Grid item xs={12}><Paper>Savings</Paper></Grid>
-                    <Grid item xs={12}><Paper>Debt</Paper></Grid>
-                    <Grid item xs={12}><Paper>Assets</Paper></Grid> */}
-      </Grid>
+        <Container>
+            <Row>
+                <h3>Expenses</h3>
+            </Row>
+            <Row>
+            <div>
+                {Object.keys(this.state.items).map(item => (
+                <div key={item}>
+                    <div className="inputfield col s6" onChange={this.changeAmount}>
+                        <input placeholder={item} type="text"/>
+                    </div>
+                    <div className="inputfield col s6" onChange={this.changeAmount}>
+                        <input placeholder={this.state.items[item]} type="text"/>
+                    </div>
+                    {/* <TextField
+                    onChange={this.changeAmount}
+                    className="label"
+                    placeholder={item}
+                    direction="row"
+                    xs={12}
+                    id="outlined-bare"
+                    defaultValue=""
+                    margin="normal"
+                    variant="outlined"
+                    inputProps={{ "aria-label": "bare" }}
+                    />
+                    <TextField
+                    onChange={this.changeAmount}
+                    placeholder={this.state.items[item]}
+                    direction="row"
+                    xs={12}
+                    id="outlined-bare"
+                    margin="normal"
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                        )
+                    }}
+                    /> */}
+                </div>
+                ))}
+            </div>
+            </Row>
+            <Row>
+                <Button onClick={this.addInput}>Add</Button>
+            </Row>
+            <Row>
+                <h3>Total {this.state.total}</h3>
+            </Row>
+        </Container>
     );
   }
 }

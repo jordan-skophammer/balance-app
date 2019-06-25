@@ -78,12 +78,12 @@ class Home extends Component {
           <Icon>home</Icon>
         </Grid>
         <Grid item xs={6}>
-          <Paper>
+        <Paper>
             <h3>Balance</h3>
-          </Paper>
+        </Paper>
         </Grid>
         <Grid item xs={2}>
-          <Icon>perm_identity</Icon>
+        <Icon>perm_identity</Icon>
         </Grid>
 
         {/* Totals Chart */}
@@ -91,52 +91,52 @@ class Home extends Component {
 
         {/* Menu Item */}
         <Grid container style={centerItem} alignItems="center" item xs={12}>
-          <Paper>Expenses</Paper>
-          <div>
+        <Paper>Expenses</Paper>
+        <div>
             {Object.keys(this.state.items).map(item => (
-              <Grid item xs={12} key={item}>
+            <Grid item xs={12} key={item}>
                 <TextField
-                  onChange={this.changeAmount}
-                  className="label"
-                  placeholder={item}
-                  direction="row"
-                  xs={12}
-                  id="outlined-bare"
-                  defaultValue=""
-                  margin="normal"
-                  variant="outlined"
-                  inputProps={{ "aria-label": "bare" }}
+                onChange={this.changeAmount}
+                className="label"
+                placeholder={item}
+                direction="row"
+                xs={12}
+                id="outlined-bare"
+                defaultValue=""
+                margin="normal"
+                variant="outlined"
+                inputProps={{ "aria-label": "bare" }}
                 />
                 <TextField
-                  onChange={this.changeAmount}
-                  placeholder={this.state.items[item]}
-                  direction="row"
-                  xs={12}
-                  id="outlined-bare"
-                  margin="normal"
-                  variant="outlined"
-                  InputProps={{
+                onChange={this.changeAmount}
+                placeholder={this.state.items[item]}
+                direction="row"
+                xs={12}
+                id="outlined-bare"
+                margin="normal"
+                variant="outlined"
+                InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
+                    <InputAdornment position="start">$</InputAdornment>
                     )
-                  }}
+                }}
                 />
-              </Grid>
+            </Grid>
             ))}
-          </div>
-          <Button variant="contained" color="primary" onClick={this.addInput}>
+        </div>
+        <Button variant="contained" color="primary" onClick={this.addInput}>
             Add
-          </Button>
+        </Button>
         </Grid>
         <Grid item xs={12}>
-          <Paper>Total {this.state.total}</Paper>
+        <Paper>Total {this.state.total}</Paper>
         </Grid>
         {/* <Grid item xs={12}><Paper>Savings</Paper></Grid>
                     <Grid item xs={12}><Paper>Debt</Paper></Grid>
                     <Grid item xs={12}><Paper>Assets</Paper></Grid> */}
-      </Grid>
+    </Grid>
     );
-  }
+}
 }
 
 export default Home;
