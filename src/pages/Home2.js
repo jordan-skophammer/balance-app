@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import { Button, Card, Row, Col, Container } from 'react-materialize';
-import Chart from "../components/chart";
+import { Button, Card, Row, Col, Container, TextInput } from 'react-materialize';
+import Chart from "../components/Chart";
+import Item from "../components/Item";
 import { set } from "mongoose";
+import UniqueId from 'react-html-id';
+import { userInfo } from "os";
 
 class Home extends Component {
-constructor(props) {
-    super(props);
-
+constructor() {
+    super();
+    UniqueId.enableUniqueIds(this)
     this.state = {
-    items: {
-        label: '1',
-        label2: '2'
-    },
+    items: [
+        {id:this.nextUniqueId(), label:'Rent', amount:635},
+        {id:this.nextUniqueId(), label:'Savings', amount:400}
+    ],
     total: 100
     };
 
-    this.changeAmount = this.changeAmount.bind(this)
-    this.totalSum = this.totalSum.bind(this)
+    console.log(this.state)
 }
 
 componentDidMount() {
@@ -45,13 +47,38 @@ fetch("/api/getData")
 
 
 totalSum() {
-console.log(this.state)
+// console.log(this.state)
 }
-changeAmount(event) {
-let newInput = event.target.value;
+changeLabel = (id, event) => {
+    const index = this.state.items.findIndex(item => {
+        return (item.id === id)
+    })
 
+    const item = Object.assign({}, this.state.items[index])
+    item.label = event.target.value
 
+    const items = Object.assign([], this.state.items)
+    items[index] = item
 
+    this.setState({items: items})
+
+    console.log(this.state)
+}
+
+changeAmount = (id, event) => {
+    const index = this.state.items.findIndex(item => {
+        return (item.id === id)
+    })
+
+    const item = Object.assign({}, this.state.items[index])
+    item.amount = parseInt(event.target.value, 10)
+
+    const items = Object.assign([], this.state.items)
+    items[index] = item
+
+    this.setState({items: items})
+
+    console.log(this.state)
 }
 render() {
     return (
@@ -60,44 +87,23 @@ render() {
                 <h3>Expenses</h3>
             </Row>
             <Row>
-            <div>
-                {Object.keys(this.state.items).map(item => (
-                <div key={item}>
-                    <div className="inputfield col s6" onChange={this.changeAmount}>
-                        <input placeholder={item} type="text"/>
-                    </div>
-                    <div className="inputfield col s6" onChange={this.changeAmount}>
-                        <input placeholder={this.state.items[item]} type="text"/>
-                    </div>
-                    {/* <TextField
-                    onChange={this.changeAmount}
-                    className="label"
-                    placeholder={item}
-                    direction="row"
-                    xs={12}
-                    id="outlined-bare"
-                    defaultValue=""
-                    margin="normal"
-                    variant="outlined"
-                    inputProps={{ "aria-label": "bare" }}
+                {this.state.items.map((item, index) => (
+                    <Item
+                    key={item.id}
+                    label={item.label}
+                    amount={item.amount}
+                    changeLabel={this.changeLabel.bind(this, item.id)}
+                    changeAmount={this.changeAmount.bind(this, item.id)}
                     />
-                    <TextField
-                    onChange={this.changeAmount}
-                    placeholder={this.state.items[item]}
-                    direction="row"
-                    xs={12}
-                    id="outlined-bare"
-                    margin="normal"
-                    variant="outlined"
-                    InputProps={{
-                        startAdornment: (
-                        <InputAdornment position="start">$</InputAdornment>
-                        )
-                    }}
-                    /> */}
-                </div>
+                // <div>
+                //     <Col s={6} key={item.id}>
+                //         <TextInput onChange={this.changeAmount.bind(this)} defaultValue={item.label} />
+                //     </Col>
+                //     <Col s={6}>
+                //         <TextInput onChange={this.changeAmount.bind(this)} defaultValue={item.amount} />
+                //     </Col>
+                // </div>
                 ))}
-            </div>
             </Row>
             <Row>
                 <Button onClick={this.addInput}>Add</Button>
