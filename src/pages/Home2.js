@@ -20,12 +20,10 @@ constructor() {
 
 componentDidMount() {
     this.getDataFromDb();
-
 }
 
 componentDidUpdate() {
     this.totalSum()
-    console.log(this.state.items)
 }
 
 getDataFromDb = () => {
@@ -40,11 +38,9 @@ addInput = () => {
     const newItem = {id: this.nextUniqueId(), label:'Description', amount:0, color:this.dynamicColors()}
 
     this.setState({items: [...this.state.items, newItem]})
-
-    console.log(this.state)
 }
 
-delItem = (id, event) => {
+delItem = (id) => {
     const items = [...this.state.items]
     items.splice(id, 1)
     this.setState({items: items})
@@ -101,9 +97,8 @@ dynamicColors = () => {
 }
 
 render() {
-
     return (
-        <Container>
+        <Container className="center-align">
             <Row>
                 <h3>Expenses</h3>
             </Row>
@@ -121,7 +116,7 @@ render() {
                 />
             </Row>
             <Row>
-                {this.state.items.map((item, index) => (
+                {this.state.items.map((item) => (
                     <Item
                     key={item.id}
                     label={item.label}

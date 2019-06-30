@@ -4,7 +4,8 @@ import {Col, TextInput, Button} from 'react-materialize';
 const Item = props => {
 
     return(<div>
-        <Col s={6}>
+        <Col s={3} />
+        <Col s={3}>
             <TextInput onChange={props.changeLabel}  defaultValue={props.label} />
         </Col>
         <Col s={6}>
