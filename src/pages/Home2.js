@@ -11,11 +11,10 @@ constructor() {
     super();
     UniqueId.enableUniqueIds(this)
     this.state = {
-    items: [
-        {id:this.nextUniqueId(), label:'Rent', amount:635},
-        {id:this.nextUniqueId(), label:'Savings', amount:400}
-    ],
-    total: 100
+        items: [
+            {id:this.nextUniqueId(), label:'Rent', amount:635},
+            {id:this.nextUniqueId(), label:'Savings', amount:400}
+        ]
     };
 
     console.log(this.state)
@@ -46,18 +45,27 @@ fetch("/api/getData")
 
 
 
-totalSum() {
-// console.log(this.state)
+totalSum = () => {
+    let amounts = this.state.items.map(item => {
+        return item.amount
+    })
+
+    let total = amounts.reduce((prev, curr) => {
+        return prev + curr
+    })
+
+    return total
 }
+
 changeLabel = (id, event) => {
     const index = this.state.items.findIndex(item => {
         return (item.id === id)
     })
 
-    const item = Object.assign({}, this.state.items[index])
+    const item = {...this.state.items[index]}
     item.label = event.target.value
 
-    const items = Object.assign([], this.state.items)
+    const items = [...this.state.items]
     items[index] = item
 
     this.setState({items: items})
@@ -67,13 +75,13 @@ changeLabel = (id, event) => {
 
 changeAmount = (id, event) => {
     const index = this.state.items.findIndex(item => {
-        return (item.id === id)
+        return item.id === id
     })
 
-    const item = Object.assign({}, this.state.items[index])
+    const item = {...this.state.items[index]}
     item.amount = parseInt(event.target.value, 10)
 
-    const items = Object.assign([], this.state.items)
+    const items = [...this.state.items]
     items[index] = item
 
     this.setState({items: items})
@@ -95,21 +103,13 @@ render() {
                     changeLabel={this.changeLabel.bind(this, item.id)}
                     changeAmount={this.changeAmount.bind(this, item.id)}
                     />
-                // <div>
-                //     <Col s={6} key={item.id}>
-                //         <TextInput onChange={this.changeAmount.bind(this)} defaultValue={item.label} />
-                //     </Col>
-                //     <Col s={6}>
-                //         <TextInput onChange={this.changeAmount.bind(this)} defaultValue={item.amount} />
-                //     </Col>
-                // </div>
                 ))}
             </Row>
             <Row>
                 <Button onClick={this.addInput}>Add</Button>
             </Row>
             <Row>
-                <h3>Total {this.state.total}</h3>
+                <h3>Total {this.totalSum()}</h3>
             </Row>
         </Container>
     );
