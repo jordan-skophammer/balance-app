@@ -36,7 +36,7 @@ fetch("/api/getData")
 
 addInput = () => {
     UniqueId.enableUniqueIds(this)
-    
+
     const newItem = {id: this.nextUniqueId(), label:'Description', amount:0}
 
     this.setState({items: [...this.state.items, newItem]})
@@ -95,6 +95,18 @@ render() {
         <Container>
             <Row>
                 <h3>Expenses</h3>
+            </Row>
+            <Row>
+                <Chart
+                
+                labels= {this.state.items.map(item => {
+                    return item.label
+                })}
+                amounts={this.state.items.map(item => {
+                    return item.amount
+                })}
+                >
+                </Chart>
             </Row>
             <Row>
                 {this.state.items.map((item, index) => (
