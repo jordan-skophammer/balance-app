@@ -16,8 +16,6 @@ constructor() {
             {id:this.nextUniqueId(), label:'Savings', amount:400}
         ]
     };
-
-    console.log(this.state)
 }
 
 componentDidMount() {
@@ -35,15 +33,18 @@ fetch("/api/getData")
     .then(res => this.setState({ data: res.data }));
 };
 
-  // addInput(event) {
-  //     new inputObject()
+addInput = () => {
+    let idCounter = this.state.items.length + 1
 
-  //     this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
+    const newItem = {id: this.getUniqueId(idCounter.toString()), label:'Description', amount:1}
 
-  //     console.log(event.target.id)
-  // }
+    // const items = {...this.state.items}
 
 
+    this.setState({items: [...this.state.items, newItem]})
+
+    console.log(this.state)
+}
 
 totalSum = () => {
     let amounts = this.state.items.map(item => {
@@ -85,8 +86,6 @@ changeAmount = (id, event) => {
     items[index] = item
 
     this.setState({items: items})
-
-    console.log(this.state)
 }
 render() {
     return (
