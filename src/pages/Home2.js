@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Row, Col, Container, TextInput } from 'react-materialize';
+import { Button, Row, Container} from 'react-materialize';
 import Chart from "../components/Chart";
 import Item from "../components/Item";
 import { set } from "mongoose";
@@ -20,11 +20,12 @@ constructor() {
 
 componentDidMount() {
     this.getDataFromDb();
-    this.totalSum();
+
 }
 
 componentDidUpdate() {
     this.totalSum()
+    console.log(this.state.items)
 }
 
 getDataFromDb = () => {
@@ -34,16 +35,19 @@ fetch("/api/getData")
 };
 
 addInput = () => {
-    let idCounter = this.state.items.length + 1
-
-    const newItem = {id: this.getUniqueId(idCounter.toString()), label:'Description', amount:1}
-
-    // const items = {...this.state.items}
-
+    UniqueId.enableUniqueIds(this)
+    
+    const newItem = {id: this.nextUniqueId(), label:'Description', amount:0}
 
     this.setState({items: [...this.state.items, newItem]})
 
     console.log(this.state)
+}
+
+delItem = (id, event) => {
+    const items = [...this.state.items]
+    items.splice(id, 1)
+    this.setState({items: items})
 }
 
 totalSum = () => {
@@ -70,8 +74,6 @@ changeLabel = (id, event) => {
     items[index] = item
 
     this.setState({items: items})
-
-    console.log(this.state)
 }
 
 changeAmount = (id, event) => {
@@ -87,6 +89,7 @@ changeAmount = (id, event) => {
 
     this.setState({items: items})
 }
+
 render() {
     return (
         <Container>
@@ -101,6 +104,7 @@ render() {
                     amount={item.amount}
                     changeLabel={this.changeLabel.bind(this, item.id)}
                     changeAmount={this.changeAmount.bind(this, item.id)}
+                    delItem={this.delItem.bind(this, item.id)}
                     />
                 ))}
             </Row>
