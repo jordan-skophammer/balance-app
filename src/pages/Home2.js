@@ -12,8 +12,8 @@ constructor() {
     UniqueId.enableUniqueIds(this)
     this.state = {
         items: [
-            {id:this.nextUniqueId(), label:'Rent', amount:635},
-            {id:this.nextUniqueId(), label:'Savings', amount:400}
+            {id:this.nextUniqueId(), label:'Rent', amount:635, color: this.dynamicColors()},
+            {id:this.nextUniqueId(), label:'Savings', amount:400, color: this.dynamicColors()}
         ]
     };
 }
@@ -37,7 +37,7 @@ fetch("/api/getData")
 addInput = () => {
     UniqueId.enableUniqueIds(this)
 
-    const newItem = {id: this.nextUniqueId(), label:'Description', amount:0}
+    const newItem = {id: this.nextUniqueId(), label:'Description', amount:0, color:this.dynamicColors()}
 
     this.setState({items: [...this.state.items, newItem]})
 
@@ -90,7 +90,18 @@ changeAmount = (id, event) => {
     this.setState({items: items})
 }
 
+dynamicColors = () => {
+    let r = Math.floor(Math.random() * 255)
+    let g = Math.floor(Math.random() * 255)
+    let b = Math.floor(Math.random() * 255)
+
+    let rgb = "rgb(" + r + "," + g + "," + b + ")"
+
+    return rgb
+}
+
 render() {
+
     return (
         <Container>
             <Row>
@@ -98,15 +109,16 @@ render() {
             </Row>
             <Row>
                 <Chart
-                
                 labels= {this.state.items.map(item => {
                     return item.label
                 })}
                 amounts={this.state.items.map(item => {
                     return item.amount
                 })}
-                >
-                </Chart>
+                backgroundColor={this.state.items.map(item => {
+                    return item.color
+                })}
+                />
             </Row>
             <Row>
                 {this.state.items.map((item, index) => (

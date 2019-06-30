@@ -6,7 +6,7 @@ const chart = (props) => (
         <Doughnut data={{
             labels: props.labels,
             datasets: [{
-            backgroundColor: ['Red', 'Green', 'Blue'],
+            backgroundColor: props.backgroundColor,
             borderColor: 'rgb(255, 99, 100)',
             data: props.amounts,}]
             }}
