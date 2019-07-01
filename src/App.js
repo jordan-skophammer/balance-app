@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
 import Home from "./pages/Home2";
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Route exact path="/" render={() => <Home />} />
-      </Router>
+      </BrowserRouter>
     );
   }
 }
