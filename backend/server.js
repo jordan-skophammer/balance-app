@@ -7,7 +7,7 @@ const API_PORT = 3001;
 const app = express();
 const router = express.Router();
 
-const dbRoute = 'mongodb://heroku_td1l549h:tjd4tonermg60sp19ci8uuoajf@ds163156.mlab.com:63156/heroku_td1l549h';
+const dbRoute = 'mongodb+srv://admin:K11KQudFeDhwH4pV@balanceappdb-ozvnj.gcp.mongodb.net/test?retryWrites=true&w=majority';
 let db = mongoose.connection;
 
 mongoose.connect(dbRoute,{ useNewUrlParser: true });
