@@ -1,23 +1,33 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const Data = require('./schema');
+const Data = require('./data');
+var cors = require('cors');
+const bodyParser = require('body-parser');
+
 
 
 const API_PORT = 3001;
 const app = express();
+app.use(cors())
 const router = express.Router();
 
-const dbRoute = 'mongodb+srv://admin:K11KQudFeDhwH4pV@balanceappdb-ozvnj.gcp.mongodb.net/test?retryWrites=true&w=majority';
-let db = mongoose.connection;
-
+const dbRoute = 'mongodb://localhost/BalanceDB';
 mongoose.connect(dbRoute,{ useNewUrlParser: true });
+let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
+db.on("error", console.error.bind(console, "MongoDB connection error:"))
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true, data: data });
+        if (err) return res.json({ success: false, error: err })
+        console.log(data[0].items)
+        return res.json({ success: true, data: data[0]})
+
     });
+    
 });
 
 router.post("/updateData", (req, res) => {
@@ -36,24 +46,24 @@ router.delete("/deleteData", (req, res) => {
     });
 });
 
-// router.post("/putData", (req, res) => {
-//     let data = new Data();
+router.post("/putData", (req, res) => {
+    let data = new Data();
 
-//     const { username, message } = req.body;
+    const { username, message } = req.body;
 
-//     if ((!username && username !== 0) || !message) {
-//         return res.json({
-//         success: false,
-//         error: "INVALID INPUTS"
-//         });
-//     }
-//     data.message = message;
-//     data.id = username;
-//     data.save(err => {
-//         if (err) return res.json({ success: false, error: err });
-//         return res.json({ success: true });
-//     });
-// });
+    if ((!username && username !== 0) || !message) {
+        return res.json({
+        success: false,
+        error: "INVALID INPUTS"
+        });
+    }
+    data.message = message;
+    data.id = username;
+    data.save(err => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true });
+    });
+});
 
 app.use("/api", router);
 

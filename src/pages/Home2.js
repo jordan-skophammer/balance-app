@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Button, Row, Container} from 'react-materialize';
 import Chart from "../components/Chart";
 import Item from "../components/Item";
-import { set } from "mongoose";
+// import { set } from "mongoose";
 import UniqueId from 'react-html-id';
-import { userInfo } from "os";
+// import { userInfo } from "os";
 
 class Home extends Component {
 constructor() {
@@ -12,24 +12,25 @@ constructor() {
     UniqueId.enableUniqueIds(this)
     this.state = {
         items: [
-            {id:this.nextUniqueId(), label:'Rent', amount:635, color: this.dynamicColors()},
-            {id:this.nextUniqueId(), label:'Savings', amount:400, color: this.dynamicColors()}
+            {id:this.nextUniqueId(), label:"Description", amount:0, color:this.dynamicColors()}
+            // {id:this.nextUniqueId(), label:'Rent', amount:635, color: this.dynamicColors()},
+            // {id:this.nextUniqueId(), label:'Savings', amount:400, color: this.dynamicColors()}
         ]
     };
 }
 
-componentDidMount() {
+componentWillMount() {
     this.getDataFromDb();
 }
 
 componentDidUpdate() {
-    this.totalSum()
+    console.log(this.state.items[1].items[0].id)
 }
 
 getDataFromDb = () => {
-fetch("/api/getData")
-    // .then(data => data.json())
-    .then(res => this.setState({ data: res.data }));
+fetch("http://localhost:3001/api/getData")
+    .then(data => data.json())
+    .then(res => this.setState({items: [...this.state.items, res.data]}))
 };
 
 addInput = () => {
@@ -91,9 +92,8 @@ dynamicColors = () => {
     let g = Math.floor(Math.random() * 255)
     let b = Math.floor(Math.random() * 255)
 
-    let rgb = "rgb(" + r + "," + g + "," + b + ")"
 
-    return rgb
+    return `rgb(${r}, ${g}, ${b})`
 }
 
 render() {
