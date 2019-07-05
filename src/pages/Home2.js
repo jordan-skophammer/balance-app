@@ -24,13 +24,32 @@ componentWillMount() {
 }
 
 componentDidUpdate() {
-    console.log(this.state.items[1].items[0].id)
+    console.log(this.state.items)
 }
 
 getDataFromDb = () => {
 fetch("http://localhost:3001/api/getData")
     .then(data => data.json())
-    .then(res => this.setState({items: [...this.state.items, res.data]}))
+    .then(res => {
+        UniqueId.enableUniqueIds(this)
+
+        let dbArray = []
+
+        res.data[0].items.forEach(item =>{
+
+            let itemId = this.nextUniqueId()
+            let itemLabel = item.label
+            let itemAmount = item.amount
+            let itemColor = this.dynamicColors()
+
+            let dbItem = {id: itemId, label: itemLabel, amount: itemAmount, color: itemColor}
+
+            dbArray.push(dbItem)
+        })
+        
+        this.setState({items: dbArray})
+    })
+    // .then(res => console.log(res.data[0].items))
 };
 
 addInput = () => {

@@ -23,9 +23,7 @@ app.use(bodyParser.json());
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err })
-        console.log(data[0].items)
-        return res.json({ success: true, data: data[0]})
-
+        return res.json({ success: true, data: data})
     });
     
 });
