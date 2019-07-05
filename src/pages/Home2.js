@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { Button, Row, Container} from 'react-materialize';
 import Chart from "../components/Chart";
 import Item from "../components/Item";
-// import { set } from "mongoose";
+import Axios from 'axios'
 import UniqueId from 'react-html-id';
-// import { userInfo } from "os";
 
 class Home extends Component {
 constructor() {
@@ -28,36 +27,36 @@ componentDidUpdate() {
 }
 
 getDataFromDb = () => {
-fetch("http://localhost:3001/api/getData")
+fetch("/api/getData")
     .then(data => data.json())
     .then(res => {
         UniqueId.enableUniqueIds(this)
 
         let dbArray = []
 
-        res.data[0].items.forEach(item =>{
+        res.data.forEach(item =>{
 
-            let itemId = this.nextUniqueId()
-            let itemLabel = item.label
-            let itemAmount = item.amount
-            let itemColor = this.dynamicColors()
-
-            let dbItem = {id: itemId, label: itemLabel, amount: itemAmount, color: itemColor}
+            let dbItem = {id: item._id, label: item.label, amount: item.amount, color: this.dynamicColors()}
 
             dbArray.push(dbItem)
         })
-        
         this.setState({items: dbArray})
     })
-    // .then(res => console.log(res.data[0].items))
 };
 
-addInput = () => {
+addItem = () => {
     UniqueId.enableUniqueIds(this)
 
     const newItem = {id: this.nextUniqueId(), label:'Description', amount:0, color:this.dynamicColors()}
 
     this.setState({items: [...this.state.items, newItem]})
+
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/putData',
+        data: newItem
+    })
 }
 
 delItem = (id) => {
@@ -147,7 +146,7 @@ render() {
                 ))}
             </Row>
             <Row>
-                <Button onClick={this.addInput}>Add</Button>
+                <Button onClick={this.addItem}>Add</Button>
             </Row>
             <Row>
                 <h3>Total {this.totalSum()}</h3>

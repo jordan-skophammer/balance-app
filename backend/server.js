@@ -29,6 +29,7 @@ router.get("/getData", (req, res) => {
 });
 
 router.post("/updateData", (req, res) => {
+    console.log(req)
     const { username, update } = req.body;
     Data.findOneAndUpdate(username, update, err => {
         if (err) return res.json({ success: false, error: err });
@@ -46,17 +47,17 @@ router.delete("/deleteData", (req, res) => {
 
 router.post("/putData", (req, res) => {
     let data = new Data();
+    console.log(req.body)
+    const { label, amount} = req.body;
 
-    const { username, message } = req.body;
-
-    if ((!username && username !== 0) || !message) {
-        return res.json({
-        success: false,
-        error: "INVALID INPUTS"
-        });
-    }
-    data.message = message;
-    data.id = username;
+    // if ((!username && username !== 0) || !message) {
+    //     return res.json({
+    //     success: false,
+    //     error: "INVALID INPUTS"
+    //     });
+    // }
+    data.label = label;
+    data.amount = amount;
     data.save(err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
