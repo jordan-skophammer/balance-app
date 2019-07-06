@@ -7,7 +7,6 @@ const chart = (props) => (
             labels: props.labels,
             datasets: [{
             backgroundColor: props.backgroundColor,
-            borderColor: 'rgb(255, 99, 100)',
             data: props.amounts,}]
             }}
             options={{legend:{display: true}}}

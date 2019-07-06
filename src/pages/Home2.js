@@ -3,17 +3,13 @@ import { Button, Row, Container} from 'react-materialize';
 import Chart from "../components/Chart";
 import Item from "../components/Item";
 import Axios from 'axios'
-import UniqueId from 'react-html-id';
 
 class Home extends Component {
 constructor() {
     super();
-    UniqueId.enableUniqueIds(this)
     this.state = {
         items: [
-            {id:this.nextUniqueId(), label:"Description", amount:0, color:this.dynamicColors()}
-            // {id:this.nextUniqueId(), label:'Rent', amount:635, color: this.dynamicColors()},
-            // {id:this.nextUniqueId(), label:'Savings', amount:400, color: this.dynamicColors()}
+            {id:"", label:"Description", amount:0, color:this.dynamicColors()}
         ]
     };
 }
@@ -30,10 +26,7 @@ getDataFromDb = () => {
 fetch("/api/getData")
     .then(data => data.json())
     .then(res => {
-        // UniqueId.enableUniqueIds(this)
-
         let dbArray = []
-
         res.data.forEach(item =>{
 
             let dbItem = {id: item._id, label: item.label, amount: item.amount, color: item.color}
@@ -45,11 +38,7 @@ fetch("/api/getData")
 };
 
 addItem = () => {
-    // UniqueId.enableUniqueIds(this)
-
     const newItem = {label:'Description', amount:0, color:this.dynamicColors()}
-
-    // this.setState({items: [...this.state.items, newItem]})
 
     Axios({
         method: 'post',
@@ -59,11 +48,13 @@ addItem = () => {
     }).then(() => this.getDataFromDb())  
 }
 
-
 delItem = (id) => {
-    const items = [...this.state.items]
-    items.splice(id, 1)
-    this.setState({items: items})
+    Axios({
+        method: 'delete',
+        baseURL: 'http://localhost:3001',
+        url: '/api/deleteData',
+        data: {id: id}
+    }).then(() => this.getDataFromDb())
 }
 
 changeLabel = (id, event) => {
@@ -74,11 +65,6 @@ changeLabel = (id, event) => {
     const item = {...this.state.items[index]}
     item.label = event.target.value
 
-    const items = [...this.state.items]
-    items[index] = item
-
-    // this.setState({items: items})
-
     Axios({
         method: 'post',
         baseURL: 'http://localhost:3001',
@@ -86,9 +72,7 @@ changeLabel = (id, event) => {
         data: {id: item.id,
             update: {label: item.label}
         }
-    }).then(() => this.getDataFromDb())
-
-    
+    }).then(() => this.getDataFromDb()) 
 }
 
 changeAmount = (id, event) => {
@@ -102,7 +86,14 @@ changeAmount = (id, event) => {
     const items = [...this.state.items]
     items[index] = item
 
-    this.setState({items: items})
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/updateData',
+        data: {id: item.id,
+            update: {amount: item.amount}
+        }
+    }).then(() => this.getDataFromDb())
 }
 
 totalSum = () => {
@@ -121,7 +112,6 @@ dynamicColors = () => {
     let r = Math.floor(Math.random() * 255)
     let g = Math.floor(Math.random() * 255)
     let b = Math.floor(Math.random() * 255)
-
 
     return `rgb(${r}, ${g}, ${b})`
 }
@@ -161,7 +151,7 @@ render() {
                 <Button onClick={this.addItem}>Add</Button>
             </Row>
             <Row>
-                <h3>Total {this.totalSum()}</h3>
+                {/* <h3>Total {this.totalSum()}</h3> */}
             </Row>
         </Container>
     );
