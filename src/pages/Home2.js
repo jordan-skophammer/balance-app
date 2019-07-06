@@ -30,13 +30,13 @@ getDataFromDb = () => {
 fetch("/api/getData")
     .then(data => data.json())
     .then(res => {
-        UniqueId.enableUniqueIds(this)
+        // UniqueId.enableUniqueIds(this)
 
         let dbArray = []
 
         res.data.forEach(item =>{
 
-            let dbItem = {id: item._id, label: item.label, amount: item.amount, color: this.dynamicColors()}
+            let dbItem = {id: item._id, label: item.label, amount: item.amount, color: item.color}
 
             dbArray.push(dbItem)
         })
@@ -45,36 +45,25 @@ fetch("/api/getData")
 };
 
 addItem = () => {
-    UniqueId.enableUniqueIds(this)
+    // UniqueId.enableUniqueIds(this)
 
-    const newItem = {id: this.nextUniqueId(), label:'Description', amount:0, color:this.dynamicColors()}
+    const newItem = {label:'Description', amount:0, color:this.dynamicColors()}
 
-    this.setState({items: [...this.state.items, newItem]})
+    // this.setState({items: [...this.state.items, newItem]})
 
     Axios({
         method: 'post',
         baseURL: 'http://localhost:3001',
         url: '/api/putData',
         data: newItem
-    })
+    }).then(() => this.getDataFromDb())  
 }
+
 
 delItem = (id) => {
     const items = [...this.state.items]
     items.splice(id, 1)
     this.setState({items: items})
-}
-
-totalSum = () => {
-    let amounts = this.state.items.map(item => {
-        return item.amount
-    })
-
-    let total = amounts.reduce((prev, curr) => {
-        return prev + curr
-    })
-
-    return total
 }
 
 changeLabel = (id, event) => {
@@ -88,7 +77,18 @@ changeLabel = (id, event) => {
     const items = [...this.state.items]
     items[index] = item
 
-    this.setState({items: items})
+    // this.setState({items: items})
+
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/updateData',
+        data: {id: item.id,
+            update: {label: item.label}
+        }
+    }).then(() => this.getDataFromDb())
+
+    
 }
 
 changeAmount = (id, event) => {
@@ -103,6 +103,18 @@ changeAmount = (id, event) => {
     items[index] = item
 
     this.setState({items: items})
+}
+
+totalSum = () => {
+    let amounts = this.state.items.map(item => {
+        return item.amount
+    })
+
+    let total = amounts.reduce((prev, curr) => {
+        return prev + curr
+    })
+
+    return total
 }
 
 dynamicColors = () => {

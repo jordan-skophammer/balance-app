@@ -17,6 +17,8 @@ let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"))
 
+mongoose.set('useFindAndModify', false)
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -29,9 +31,11 @@ router.get("/getData", (req, res) => {
 });
 
 router.post("/updateData", (req, res) => {
-    console.log(req)
-    const { username, update } = req.body;
-    Data.findOneAndUpdate(username, update, err => {
+    console.log(req.body)
+    const _id = req.body.id
+    const update = req.body.update
+    // const { id, update } = req.body;
+    Data.findByIdAndUpdate(_id, update, err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
@@ -47,17 +51,11 @@ router.delete("/deleteData", (req, res) => {
 
 router.post("/putData", (req, res) => {
     let data = new Data();
-    console.log(req.body)
-    const { label, amount} = req.body;
+    const {label, amount, color} = req.body;
 
-    // if ((!username && username !== 0) || !message) {
-    //     return res.json({
-    //     success: false,
-    //     error: "INVALID INPUTS"
-    //     });
-    // }
     data.label = label;
-    data.amount = amount;
+    data.amount = amount
+    data.color = color
     data.save(err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
