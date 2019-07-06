@@ -2,7 +2,7 @@
   "name": "balance_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jordan-skophammer.github.io/balance-app/",
+  "homepage": "https://whispering-shelf-92626.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^3.4.0",
     "@material/button": "^2.3.0",
