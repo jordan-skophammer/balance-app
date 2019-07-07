@@ -8,7 +8,7 @@ require('dotenv').config()
 
 
 
-const API_PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors())
 const router = express.Router();
@@ -71,4 +71,4 @@ router.post("/putData", (req, res) => {
 
 app.use("/api", router);
 
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));
