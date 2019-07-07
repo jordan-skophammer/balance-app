@@ -4,7 +4,7 @@ const Data = require('./data');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path')
-const proxy = require('http-proxy-middleware')
+// const proxy = require('http-proxy-middleware')
 
 require('dotenv').config()
 
@@ -75,9 +75,9 @@ router.post("/putData", (req, res) => {
     });
 });
 
-var apiProxy = proxy('/api', {
-    target: 'https://whispering-shelf-92626.herokuapp.com/'
-})
-app.use("/api", router, apiProxy);
+// var apiProxy = proxy('/api', {
+//     target: 'https://whispering-shelf-92626.herokuapp.com/'
+// })
+app.use("/api/", router);
 
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`));
