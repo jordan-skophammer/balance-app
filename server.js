@@ -3,6 +3,7 @@ const express = require('express');
 const Data = require('./data');
 var cors = require('cors');
 const bodyParser = require('body-parser');
+// const path = require('path')
 require('dotenv').config()
 
 
@@ -11,6 +12,12 @@ const API_PORT = 3001;
 const app = express();
 app.use(cors())
 const router = express.Router();
+
+
+// app.use(express.static(path.join(__dirname, 'client/')))
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/client/public/index.html'))
+// })
 
 mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
 let db = mongoose.connection;

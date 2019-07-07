@@ -1,16 +1,18 @@
 {
-  "name": "backend",
+  "name": "balance_app",
   "version": "1.0.0",
-  "description": "",
-  "main": "schema.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "concurrently \"node server.js\" \"cd client && npm start\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
+  "description": "monthly balance app using react and mongodb",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "concurrently": "^4.1.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",

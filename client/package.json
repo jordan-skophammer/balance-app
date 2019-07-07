@@ -1,8 +1,7 @@
 {
-  "name": "balance_app",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://whispering-shelf-92626.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^3.4.0",
     "@material/button": "^2.3.0",
@@ -24,9 +23,7 @@
     "react-scripts": "2.1.1"
   },
   "scripts": {
-    "start": "concurrently \"cd backend && npm start\" \"react-scripts start\"",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,10 +38,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "description": "monthly balance app using react and gulp",
   "main": "index.js",
-  "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "@babel/preset-env": "^7.1.5",
