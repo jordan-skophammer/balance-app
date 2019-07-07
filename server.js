@@ -19,10 +19,11 @@ const router = express.Router();
 // app.use(express.static(path.join(__dirname, 'client/build')))
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname + '/client/build/index.html'))
-    })
+    // app.use(express.static('client/build'));
+    // app.get('*', (req, res) => {
+    //     res.sendFile(path.join(__dirname + '/client/build/index.html'))
+    // })
+    app.use('/', express.static(path.join(__dirname, 'client/build')))
 }
 
 var MONGODB_URI = process.env.MONGODB_URI || process.env.MLAB_CONN;
