@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client/build')))
 }
 
-var MONGODB_URI = process.env.ATLAS_DB_CONN;
+var MONGODB_URI = process.env.MONGODB_URI || process.env.MLAB_CONN;
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
 // mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
