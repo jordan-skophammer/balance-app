@@ -25,7 +25,11 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || process.env.MLAB_CONN;
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+// mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
+
 let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"))
