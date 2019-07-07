@@ -3,7 +3,7 @@ const express = require('express');
 const Data = require('./data');
 var cors = require('cors');
 const bodyParser = require('body-parser');
-// const path = require('path')
+const path = require('path')
 require('dotenv').config()
 
 
@@ -14,13 +14,13 @@ app.use(cors())
 const router = express.Router();
 
 
-app.use(express.static(path.join(__dirname, 'client/build')))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'))
-})
+// app.use(express.static(path.join(__dirname, 'client/build')))
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname + '/client/build/index.html'))
+    })
 }
 
 mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
