@@ -19,6 +19,10 @@ const router = express.Router();
 //   res.sendFile(path.join(__dirname + '/client/public/index.html'))
 // })
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
 mongoose.connect(process.env.DB_CONN,{ useNewUrlParser: true });
 let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
