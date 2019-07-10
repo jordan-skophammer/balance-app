@@ -2,6 +2,10 @@
 
 This is a personal finance app that graphically represents your expenses. User can add, edit, and delete their expense items.
 
+## Working Deployment
+
+[http://whispering-shelf-92626.herokuapp.com/](http://whispering-shelf-92626.herokuapp.com/)
+
 ## Future Features
 
 - Account login and authentication using Passport.js
@@ -27,7 +31,7 @@ Once the repo is clone, **npm start** will start will run the server and the cli
 
 ## Authors
 
-* **Jordan Skophammer** - [Profolio Site](https://skophammer)
+* **Jordan Skophammer** - [Profolio Site](https://skophammer.com)
 
 ## License
 
