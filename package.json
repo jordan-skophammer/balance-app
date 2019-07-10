@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd client && react-scripts test",
     "start": "concurrently \"node server.js\" \"cd client && npm start\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "flow": "flow"
   },
   "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
   "description": "monthly balance app using react and mongodb",
@@ -21,6 +22,7 @@
     "npm": "^6.10.0"
   },
   "devDependencies": {
+    "flow-bin": "^0.102.0",
     "http-proxy-middleware": "^0.19.1"
   }
 }

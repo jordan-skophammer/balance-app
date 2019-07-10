@@ -1,142 +1,162 @@
+//@flow
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import Icon from "@material-ui/core/Icon";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Chart from "../components/chart";
-import { set } from "mongoose";
-
-//Styling
-const centerItem = {
-  textAlign: "center"
-};
+import { Button, Row, Container} from 'react-materialize';
+import Chart from "../components/Chart";
+import Item from "../components/Item";
+import Axios from 'axios'
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-
+constructor() {
+    super();
     this.state = {
-      items: {
-        label: '1',
-        label2: '2'
-      },
-      total: 100
+        items: [
+            {id:"", label:"Description", amount:0, color:this.dynamicColors()}
+        ]
     };
-
-    this.changeAmount = this.changeAmount.bind(this)
-    this.totalSum = this.totalSum.bind(this)
-  }
-
-  componentDidMount() {
-    this.getDataFromDb();
-    this.totalSum();
-  }
-
-  componentDidUpdate() {
-      this.totalSum()
-  }
-
-  getDataFromDb = () => {
-    fetch("/api/getData")
-      // .then(data => data.json())
-      .then(res => this.setState({ data: res.data }));
-  };
-
-  // addInput(event) {
-  //     new inputObject()
-
-  //     this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput])}))
-
-  //     console.log(event.target.id)
-  // }
-
-
-
-  totalSum() {
-    console.log(this.state)
-  }
-  changeAmount(event) {
-    let newInput = event.target.value;
-    
-    
-    
-  }
-  render() {
-    return (
-      <Grid
-        container
-        style={centerItem}
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        spacing={16}
-      >
-        {/* Navbar */}
-        <Grid item xs={2}>
-          <Icon>home</Icon>
-        </Grid>
-        <Grid item xs={6}>
-        <Paper>
-            <h3>Balance</h3>
-        </Paper>
-        </Grid>
-        <Grid item xs={2}>
-        <Icon>perm_identity</Icon>
-        </Grid>
-
-        {/* Totals Chart */}
-        {/* <Grid item xs={12}><Chart /></Grid> */}
-
-        {/* Menu Item */}
-        <Grid container style={centerItem} alignItems="center" item xs={12}>
-        <Paper>Expenses</Paper>
-        <div>
-            {Object.keys(this.state.items).map(item => (
-            <Grid item xs={12} key={item}>
-                <TextField
-                onChange={this.changeAmount}
-                className="label"
-                placeholder={item}
-                direction="row"
-                xs={12}
-                id="outlined-bare"
-                defaultValue=""
-                margin="normal"
-                variant="outlined"
-                inputProps={{ "aria-label": "bare" }}
-                />
-                <TextField
-                onChange={this.changeAmount}
-                placeholder={this.state.items[item]}
-                direction="row"
-                xs={12}
-                id="outlined-bare"
-                margin="normal"
-                variant="outlined"
-                InputProps={{
-                    startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                    )
-                }}
-                />
-            </Grid>
-            ))}
-        </div>
-        <Button variant="contained" color="primary" onClick={this.addInput}>
-            Add
-        </Button>
-        </Grid>
-        <Grid item xs={12}>
-        <Paper>Total {this.state.total}</Paper>
-        </Grid>
-        {/* <Grid item xs={12}><Paper>Savings</Paper></Grid>
-                    <Grid item xs={12}><Paper>Debt</Paper></Grid>
-                    <Grid item xs={12}><Paper>Assets</Paper></Grid> */}
-    </Grid>
-    );
 }
+
+componentWillMount() {
+    this.getDataFromDb();
+}
+
+componentDidUpdate() {
+    console.log(this.state.items)
+}
+
+getDataFromDb = () => {
+fetch("/api/getData")
+    .then(data => data.json())
+    .then(res => {
+        let dbArray = []
+        res.data.forEach(item =>{
+
+            let dbItem = {id: item._id, label: item.label, amount: item.amount, color: item.color}
+
+            dbArray.push(dbItem)
+        })
+        this.setState({items: dbArray})
+    })
+};
+
+addItem = () => {
+    const newItem = {label:'Description', amount:0, color:this.dynamicColors()}
+
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/putData',
+        data: newItem
+    }).then(() => this.getDataFromDb())  
+}
+
+delItem = (id) => {
+    Axios({
+        method: 'delete',
+        baseURL: 'http://localhost:3001',
+        url: '/api/deleteData',
+        data: {id: id}
+    }).then(() => this.getDataFromDb())
+}
+
+changeLabel = (id, event) => {
+    const index = this.state.items.findIndex(item => {
+        return (item.id === id)
+    })
+
+    const item = {...this.state.items[index]}
+    item.label = event.target.value
+
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/updateData',
+        data: {id: item.id,
+            update: {label: item.label}
+        }
+    }).then(() => this.getDataFromDb()) 
+}
+
+changeAmount = (id, event) => {
+    const index = this.state.items.findIndex(item => {
+        return item.id === id
+    })
+
+    const item = {...this.state.items[index]}
+    item.amount = parseInt(event.target.value, 10)
+
+    const items = [...this.state.items]
+    items[index] = item
+
+    Axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/api/updateData',
+        data: {id: item.id,
+            update: {amount: item.amount}
+        }
+    }).then(() => this.getDataFromDb())
+}
+
+totalSum = () => {
+    let amounts = this.state.items.map(item => {
+        return item.amount
+    })
+
+    let total = amounts.reduce((prev, curr) => {
+        return prev + curr
+    })
+
+    return total
+}
+
+dynamicColors = () => {
+    let r = Math.floor(Math.random() * 255)
+    let g = Math.floor(Math.random() * 255)
+    let b = Math.floor(Math.random() * 255)
+
+    return `rgb(${r}, ${g}, ${b})`
+}
+
+render() {
+    return (
+        <Container className="center-align">
+            <Row>
+                <h3>Expenses</h3>
+            </Row>
+            <Row>
+                <Chart
+                labels= {this.state.items.map(item => {
+                    return item.label
+                })}
+                amounts={this.state.items.map(item => {
+                    return item.amount
+                })}
+                backgroundColor={this.state.items.map(item => {
+                    return item.color
+                })}
+                />
+            </Row>
+            <Row>
+                {this.state.items.map((item) => (
+                    <Item
+                    key={item.id}
+                    label={item.label}
+                    amount={item.amount}
+                    changeLabel={this.changeLabel.bind(this, item.id)}
+                    changeAmount={this.changeAmount.bind(this, item.id)}
+                    delItem={this.delItem.bind(this, item.id)}
+                    />
+                ))}
+            </Row>
+            <Row>
+                <Button onClick={this.addItem}>Add</Button>
+            </Row>
+            <Row>
+                {/* <h3>Total {this.totalSum()}</h3> */}
+            </Row>
+        </Container>
+    );
+  }
 }
 
 export default Home;
