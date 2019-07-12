@@ -5,7 +5,7 @@
   "scripts": {
     "test": "cd client && react-scripts test",
     "start": "concurrently \"node server.js\" \"cd client && yarn start\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
   "description": "monthly balance app using react and mongodb",
