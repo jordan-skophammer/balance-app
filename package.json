@@ -4,9 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "cd client && react-scripts test",
-    "start": "concurrently \"node server.js\" \"cd client && npm start\"",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "flow": "flow"
+    "start": "concurrently \"node server.js\" \"cd client && yarn start\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Jordan Skophammer <jordan.skophammer@gmail.com>",
   "description": "monthly balance app using react and mongodb",
