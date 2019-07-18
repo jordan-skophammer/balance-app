@@ -1,10 +1,17 @@
-import React, { Component } from 'react';
-import Home from "./pages/Home";
+import React, { PureComponent } from 'react'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Home from './pages/Home'
+import Login from './pages/Login'
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     return (
-      <Home />
+      <Router>
+        <div>
+          <Route exact path="/" render={() => <Home />} />
+          <Route path="/Login" render={() => <Login />} />
+        </div>
+      </Router>
     );
   }
 }

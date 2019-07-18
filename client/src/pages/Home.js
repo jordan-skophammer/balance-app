@@ -1,22 +1,22 @@
 //@flow
-import React, { Component } from "react";
-import { Button, Row, Container} from 'react-materialize';
-import Chart from "../components/Chart";
-import Item from "../components/Item";
+import React, { Component } from 'react'
+import { Button, Row, Container} from 'react-materialize'
+import Chart from '../components/Chart'
+import Item from '../components/Item'
 import Axios from 'axios'
 
 class Home extends Component {
 constructor() {
-    super();
+    super()
     this.state = {
         items: [
             {id:"", label:"Description", amount:0, color:this.dynamicColors()}
         ]
-    };
+    }
 }
 
 componentWillMount() {
-    this.getDataFromDb();
+    this.getDataFromDb()
 }
 
 componentDidUpdate() {
@@ -155,8 +155,7 @@ render() {
                 {/* <h3>Total {this.totalSum()}</h3> */}
             </Row>
         </Container>
-    );
-  }
+    )}
 }
 
-export default Home;
+export default Home
