@@ -4,15 +4,19 @@ import Axios from 'axios'
 
 class Register extends Component {
 
-    addItem = () => {
-        const newItem = {label:'Description', amount:0, color:this.dynamicColors()}
-    
-        Axios({
-            method: 'post',
-            baseURL: 'http://localhost:3001',
-            url: '/api/putData',
-            data: newItem
-        }).then(() => this.getDataFromDb())  
+    newUser = (event) => {
+        event.preventDefault()
+
+        const data = event.target.value
+
+        console.log(data)
+
+        // Axios({
+        //     method: 'post',
+        //     baseURL: 'http://localhost:3001',
+        //     url: '/api/putData',
+        //     data: data
+        // })
     }
 
     render() {
@@ -20,7 +24,7 @@ class Register extends Component {
             <Container>
                 <Card>
                     <h1>Register</h1>
-                    <form action="/user/register" method="POST">
+                    <form onSubmit={this.newUser}>
                         <div className="form-group">
                             <label htmlFor="name">Name</label>
                             <input type="text" id="name" name="name" className="validate" />
@@ -37,7 +41,7 @@ class Register extends Component {
                             <label htmlFor="password2">Confirm Password</label>
                             <input type="password" id="password2" name="password2" className="validate" />
                         </div>
-                        <Button type="submit">Register</Button>
+                        <Button>Register</Button>
                     </form><br/>
                     <p>Already Registered? <a href="/Login">Login</a></p>
                 </Card>

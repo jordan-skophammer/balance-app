@@ -4,7 +4,7 @@ const expressLayouts = require('express-ejs-layouts')
 const Data = require('./models/data')
 const User = require('./models/user')
 var cors = require('cors')
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const path = require('path')
 require('dotenv').config()
 
@@ -29,7 +29,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"))
 mongoose.set('useFindAndModify', false)
 
 app.use(express.urlencoded({ extended: false }));
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
@@ -56,7 +56,7 @@ router.delete("/deleteData", (req, res) => {
     })
 })
 
-router.post("/putData", (req, res) => {
+router.post('/putData', (req, res) => {
     let data = new Data()
     const {label, amount, color} = req.body
 
@@ -68,7 +68,11 @@ router.post("/putData", (req, res) => {
         return res.json({ success: true })
     })
 })
+
+router.post('/newUser', (req, res) => {
+    console.log(req.body)
+})
  
-app.use("/api/", router)
+app.use('/api/', router)
 
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))
