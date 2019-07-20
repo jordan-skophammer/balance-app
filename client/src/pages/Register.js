@@ -27,9 +27,8 @@ class Register extends Component {
             method: 'post',
             baseURL: 'http://localhost:3001',
             url: '/api/newUser',
-            data: this.data
-        })
-
+            data: data
+        }).catch((error) => console.log(error))
     }
 
     render() {

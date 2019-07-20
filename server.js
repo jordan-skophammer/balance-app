@@ -70,9 +70,17 @@ router.post('/putData', (req, res) => {
 })
 
 router.post('/newUser', (req, res) => {
-    console.log(req.body)
+    let user = new User()
+    const {name, email, password} = req.body
 
-    if (err) return res.json({ success: false, error: err })
+    user.name = name
+    user.email = email
+    user.password = password
+    user.save(err => {
+        if(err) return req.json({success: false, error: err})
+        return res.json({ success: true})
+    })
+    console.log(req.body)
 })
  
 app.use('/api/', router)

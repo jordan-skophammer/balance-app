@@ -46,7 +46,9 @@ addItem = () => {
         baseURL: 'http://localhost:3001',
         url: '/api/putData',
         data: newItem
-    }).then(() => this.getDataFromDb())  
+    })
+    .catch((error) => console.log(error))
+    .then(() => this.getDataFromDb())  
 }
 
 delItem = (id) => {
