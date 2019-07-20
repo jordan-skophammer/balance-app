@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
-const Data = require('./data')
+const Data = require('./models/data')
+const User = require('./models/user')
 var cors = require('cors')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const path = require('path')
 require('dotenv').config()
 
@@ -12,9 +13,6 @@ const app = express()
 const router = express.Router()
 
 app.use(cors())
-
-app.use(expressLayouts)
-app.set('view engine', 'ejs')
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client/build')))
@@ -30,8 +28,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"))
 
 mongoose.set('useFindAndModify', false)
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json())
 
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
