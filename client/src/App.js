@@ -11,7 +11,7 @@ class App extends PureComponent {
         <div>
           <Route exact path="/" render={() => <Home />} />
           <Route path="/Login" render={() => <Login />} />
-          <Route path="/Register" render={(req, res) => <Register />} />
+          <Route path="/Register" render={() => <Register />} />
         </div>
       </Router>
     );

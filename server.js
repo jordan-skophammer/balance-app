@@ -71,6 +71,8 @@ router.post('/putData', (req, res) => {
 
 router.post('/newUser', (req, res) => {
     console.log(req.body)
+
+    if (err) return res.json({ success: false, error: err })
 })
  
 app.use('/api/', router)
