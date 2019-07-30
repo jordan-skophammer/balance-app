@@ -5,7 +5,7 @@ const User = require('./models/user')
 var cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
-const herokuProxy = require('heroku-proxy')
+// const herokuProxy = require('heroku-proxy')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3001
@@ -84,6 +84,6 @@ router.post('/newUser', (req, res) => {
 })
  
 app.use('/api/', router)
-app.use(herokuProxy())
+// app.use(herokuProxy())
 
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))

@@ -43,7 +43,7 @@ addItem = () => {
 
     Axios({
         method: 'post',
-        baseURL: 'http://localhost:3001',
+        // baseURL: 'http://localhost:3001',
         url: '/api/putData',
         data: newItem
     })
@@ -54,7 +54,7 @@ addItem = () => {
 delItem = (id) => {
     Axios({
         method: 'delete',
-        baseURL: 'http://localhost:3001',
+        // baseURL: 'http://localhost:3001',
         url: '/api/deleteData',
         data: {id: id}
     }).then(() => this.getDataFromDb())
@@ -91,7 +91,7 @@ changeAmount = (id, event) => {
 
     Axios({
         method: 'post',
-        baseURL: 'http://localhost:3001',
+        // baseURL: 'http://localhost:3001',
         url: '/api/updateData',
         data: {id: item.id,
             update: {amount: item.amount}
