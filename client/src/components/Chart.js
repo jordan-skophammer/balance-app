@@ -9,7 +9,16 @@ const chart = (props) => (
             backgroundColor: props.backgroundColor,
             data: props.amounts,}]
             }}
-            options={{legend:{display: true}}}
+            options={{
+                legend:{display: true},
+                responsive: true,
+                maintainAspectRatio: true,
+                layout: {
+                    width: 900,
+                    height: 900,
+                    padding: 0
+                }                 
+            }}
         />
     </div>
 )

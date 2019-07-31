@@ -1,6 +1,6 @@
 //@flow
 import React, { Component } from 'react'
-import { Button, Row, Container} from 'react-materialize'
+import { Button, Row, Col} from 'react-materialize'
 import Chart from '../components/Chart'
 import Item from '../components/Item'
 import Axios from 'axios'
@@ -43,7 +43,6 @@ addItem = () => {
 
     Axios({
         method: 'post',
-        // baseURL: 'http://localhost:3001',
         url: '/api/putData',
         data: newItem
     })
@@ -54,7 +53,6 @@ addItem = () => {
 delItem = (id) => {
     Axios({
         method: 'delete',
-        // baseURL: 'http://localhost:3001',
         url: '/api/deleteData',
         data: {id: id}
     }).then(() => this.getDataFromDb())
@@ -121,42 +119,44 @@ dynamicColors = () => {
 
 render() {
     return (
-        <Container className="center-align">
+        <div className="center-align">
             <Row>
                 <h3>Expenses</h3>
             </Row>
             <Row>
-                <Chart
-                labels= {this.state.items.map(item => {
-                    return item.label
-                })}
-                amounts={this.state.items.map(item => {
-                    return item.amount
-                })}
-                backgroundColor={this.state.items.map(item => {
-                    return item.color
-                })}
-                />
-            </Row>
-            <Row>
-                {this.state.items.map((item) => (
-                    <Item
-                    key={item.id}
-                    label={item.label}
-                    amount={item.amount}
-                    changeLabel={this.changeLabel.bind(this, item.id)}
-                    changeAmount={this.changeAmount.bind(this, item.id)}
-                    delItem={this.delItem.bind(this, item.id)}
+                <Col s={6}>
+                    <Chart
+                    labels= {this.state.items.map(item => {
+                        return item.label
+                    })}
+                    amounts={this.state.items.map(item => {
+                        return item.amount
+                    })}
+                    backgroundColor={this.state.items.map(item => {
+                        return item.color
+                    })}
                     />
-                ))}
+                </Col>
+                <Col s={6}>
+                    {this.state.items.map((item) => (
+                        <Item
+                        key={item.id}
+                        label={item.label}
+                        amount={item.amount}
+                        changeLabel={this.changeLabel.bind(this, item.id)}
+                        changeAmount={this.changeAmount.bind(this, item.id)}
+                        delItem={this.delItem.bind(this, item.id)}
+                        />
+                    ))}
+                    <Row>
+                        <Button onClick={this.addItem}>Add</Button>
+                    </Row>
+                </Col>
             </Row>
             <Row>
-                <Button onClick={this.addItem}>Add</Button>
+                <h3>Total {this.totalSum()}</h3>
             </Row>
-            <Row>
-                {/* <h3>Total {this.totalSum()}</h3> */}
-            </Row>
-        </Container>
+        </div>
     )}
 }
 
