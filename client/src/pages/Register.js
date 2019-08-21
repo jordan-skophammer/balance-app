@@ -23,12 +23,16 @@ class Register extends Component {
         let data = this.state
         console.log(data)
 
-        Axios({
-            method: 'post',
-            baseURL: 'http://localhost:3001',
-            url: '/api/newUser',
-            data: data
-        }).catch((error) => console.log(error))
+        if (data.password !== data.password2) {
+            console.log("Passwords do not match!")
+        }else {
+            Axios({
+                method: 'post',
+                baseURL: 'http://localhost:3001',
+                url: '/api/newUser',
+                data: data
+            }).catch((error) => console.log(error))
+        }   
     }
 
     render() {

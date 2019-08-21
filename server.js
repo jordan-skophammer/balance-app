@@ -69,6 +69,7 @@ router.post('/putData', (req, res) => {
     })
 })
 
+// Register
 router.post('/newUser', (req, res) => {
     let user = new User()
     const {name, email, password} = req.body
@@ -80,7 +81,6 @@ router.post('/newUser', (req, res) => {
         if(err) return req.json({success: false, error: err})
         return res.json({ success: true})
     })
-    console.log(req.body)
 })
  
 app.use('/api/', router)
