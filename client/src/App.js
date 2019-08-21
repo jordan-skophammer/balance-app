@@ -10,8 +10,8 @@ class App extends PureComponent {
       <Router>
         <div>
           <Route exact path="/" render={() => <Home />} />
-          <Route path="/Login" render={() => <Login />} />
-          <Route path="/Register" render={() => <Register />} />
+          <Route path="/login" render={() => <Login />} />
+          <Route path="/register" render={() => <Register />} />
         </div>
       </Router>
     );

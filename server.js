@@ -69,17 +69,25 @@ router.post('/putData', (req, res) => {
     })
 })
 
-// Register
 router.post('/newUser', (req, res) => {
     let user = new User()
     const {name, email, password} = req.body
+    let errors = []
 
     user.name = name
     user.email = email
     user.password = password
-    user.save(err => {
-        if(err) return req.json({success: false, error: err})
-        return res.json({ success: true})
+
+    User.findOne({email: email}).then(user => {
+        if (user) {
+            errors.push({msg: 'User already exists. Please create new account or login.'})
+            return res.json({success: false, error: errors})
+        } else {
+            user.save(err => {
+                if(err) return req.json({success: false, error: err})
+                return res.json({ success: true})
+            })
+        }
     })
 })
  

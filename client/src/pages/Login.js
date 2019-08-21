@@ -19,7 +19,7 @@ class Login extends Component {
                         </div>
                         <Button type="submit">Login</Button>
                     </form><br />
-                    <p>No Account? <a href="/Register">Register</a></p>
+                    <p>No Account? <a href="/register">Register</a></p>
                 </Card>
             </Container>
         )

@@ -31,7 +31,15 @@ class Register extends Component {
                 baseURL: 'http://localhost:3001',
                 url: '/api/newUser',
                 data: data
-            }).catch((error) => console.log(error))
+            }).then((res) => {
+                if (res.data.success === false) {
+                    // window.location = "/login"
+                    console.log(res.data.error)
+                }
+            })
+            // .catch((error) => {
+            //     console.log(error)
+            // })
         }   
     }
 
@@ -59,7 +67,7 @@ class Register extends Component {
                         </div>
                         <Button onClick={this.newUser}>Register</Button>
                     </form><br/>
-                    <p>Already Registered? <a href="/Login">Login</a></p>
+                    <p>Already Registered? <a href="/login">Login</a></p>
                 </Card>
             </Container>
         )
