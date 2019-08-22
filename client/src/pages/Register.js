@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Card, Container} from 'react-materialize'
+import {Button, Card, Container, Modal} from 'react-materialize'
 import Axios from 'axios'
 
 class Register extends Component {
@@ -9,7 +9,9 @@ class Register extends Component {
             name: '',
             email: '',
             password: '',
-            password2: ''
+            password2: '',
+            msg: '',
+            modalOpen: false
         }
     }
 
@@ -23,9 +25,9 @@ class Register extends Component {
         let data = this.state
         console.log(data)
 
-        if (data.password !== data.password2) {
-            console.log("Passwords do not match!")
-        }else {
+        // if (data.password !== data.password2) {
+        //     console.log("Passwords do not match!")
+        // }else {
             Axios({
                 method: 'post',
                 baseURL: 'http://localhost:3001',
@@ -33,21 +35,37 @@ class Register extends Component {
                 data: data
             }).then((res) => {
                 if (res.data.success === false) {
-                    // window.location = "/login"
-                    console.log(res.data.error)
+                    let error = res.data.error[0].msg
+
+                    console.log(error)
+                    this.setState({msg: error, modalOpen: true})
+
+                    setTimeout(() => {
+                        this.setState({msg: '', modalOpen: false})
+                    }, 3000)
+                }else {
+                    this.setState({msg: 'Your account has been added, please login.', modalOpen: true})
+
+                    setTimeout(() => {
+                        this.setState({msg: '', modalOpen: false})
+
+                        window.location = '/login'
+                    }, 3000) 
                 }
             })
-            // .catch((error) => {
-            //     console.log(error)
-            // })
-        }   
+            .catch((error) => {
+                console.log(error)
+            })
+        // }   
     }
 
     render() {
+
         return (
             <Container>
                 <Card>
                     <h1>Register</h1>
+                    <Modal open={this.state.modalOpen}><h3>{this.state.msg}</h3></Modal>
                     <form>
                         <div className="form-group">
                             <label htmlFor="name">Name</label>

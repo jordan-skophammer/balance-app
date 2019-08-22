@@ -71,24 +71,40 @@ router.post('/putData', (req, res) => {
 
 router.post('/newUser', (req, res) => {
     let user = new User()
-    const {name, email, password} = req.body
+    const {name, email, password, password2} = req.body
     let errors = []
 
     user.name = name
     user.email = email
     user.password = password
 
+    if (!name || !email || !password || !password2) {
+        errors.push({msg: 'Please fill required fields'})
+        return res.json({success: false, error: errors})
+    }
+
+    if (password !== password2) {
+        errors.push({msg: 'Passwords do not match! Please try again.'})
+        return res.json({success: false, error: errors})
+    }
+
     User.findOne({email: email}).then(user => {
         if (user) {
             errors.push({msg: 'User already exists. Please create new account or login.'})
             return res.json({success: false, error: errors})
-        } else {
-            user.save(err => {
-                if(err) return req.json({success: false, error: err})
-                return res.json({ success: true})
-            })
+        }else {
+            saveUser()
         }
     })
+
+    function saveUser () {
+        user.save(err => {
+            if(err) return req.json({success: false, error: err})
+            return res.json({ success: true})
+        })
+    }
+
+
 })
  
 app.use('/api/', router)
