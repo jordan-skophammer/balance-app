@@ -23,40 +23,34 @@ class Register extends Component {
         event.preventDefault()
 
         let data = this.state
-        console.log(data)
+        
+        Axios({
+            method: 'post',
+            baseURL: 'http://localhost:3001',
+            url: '/api/newUser',
+            data: data
+        }).then((res) => {
+            if (res.data.success === false) {
+                let error = res.data.error[0].msg
 
-        // if (data.password !== data.password2) {
-        //     console.log("Passwords do not match!")
-        // }else {
-            Axios({
-                method: 'post',
-                baseURL: 'http://localhost:3001',
-                url: '/api/newUser',
-                data: data
-            }).then((res) => {
-                if (res.data.success === false) {
-                    let error = res.data.error[0].msg
+                this.setState({msg: error, modalOpen: true})
 
-                    console.log(error)
-                    this.setState({msg: error, modalOpen: true})
+                setTimeout(() => {
+                    this.setState({msg: '', modalOpen: false})
+                }, 3000)
+            }else {
+                this.setState({msg: 'Your account has been added, please login.', modalOpen: true})
 
-                    setTimeout(() => {
-                        this.setState({msg: '', modalOpen: false})
-                    }, 3000)
-                }else {
-                    this.setState({msg: 'Your account has been added, please login.', modalOpen: true})
+                setTimeout(() => {
+                    this.setState({msg: '', modalOpen: false})
 
-                    setTimeout(() => {
-                        this.setState({msg: '', modalOpen: false})
-
-                        window.location = '/login'
-                    }, 3000) 
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        // }   
+                    window.location = '/login'
+                }, 3000) 
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        }) 
     }
 
     render() {

@@ -5,7 +5,7 @@ const User = require('./models/user')
 var cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
-// const herokuProxy = require('heroku-proxy')
+const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3001
@@ -98,16 +98,25 @@ router.post('/newUser', (req, res) => {
     })
 
     function saveUser () {
-        user.save(err => {
-            if(err) return req.json({success: false, error: err})
-            return res.json({ success: true})
+// Encrypt Password
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+                if (err) throw err
+
+                user.password = hash
+// Save New User
+                user.save(err => {
+                    if(err) return req.json({success: false, error: err})
+                    return res.json({ success: true})
+                })
+            })
+            
         })
+
+
     }
-
-
 })
  
 app.use('/api/', router)
-// app.use(herokuProxy())
 
 app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT}`))
