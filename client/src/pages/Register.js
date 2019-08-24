@@ -26,7 +26,7 @@ class Register extends Component {
         
         Axios({
             method: 'post',
-            baseURL: 'http://localhost:3001',
+            // baseURL: 'http://localhost:3001',
             url: '/api/newUser',
             data: data
         }).then((res) => {

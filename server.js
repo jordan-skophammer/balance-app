@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const passport = require('passport')
 const express = require('express')
 const Data = require('./models/data')
 const User = require('./models/user')
@@ -7,6 +8,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const bcrypt = require('bcryptjs')
 require('dotenv').config()
+require('./config/passport')(passport)
 
 const PORT = process.env.PORT || 3001
 const app = express()
@@ -31,6 +33,11 @@ mongoose.set('useFindAndModify', false)
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err })
@@ -109,12 +116,24 @@ router.post('/newUser', (req, res) => {
                     if(err) return req.json({success: false, error: err})
                     return res.json({ success: true})
                 })
-            })
-            
+            })  
         })
-
-
     }
+})
+
+// Login
+router.post('/login', (req, res, next) => {
+    console.log(req.body)
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login'
+    })(req, res, next)
+  })
+  
+// Logout
+router.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/login')
 })
  
 app.use('/api/', router)

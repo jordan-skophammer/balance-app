@@ -89,7 +89,6 @@ changeAmount = (id, event) => {
 
     Axios({
         method: 'post',
-        // baseURL: 'http://localhost:3001',
         url: '/api/updateData',
         data: {id: item.id,
             update: {amount: item.amount}
