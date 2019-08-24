@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Card, Container} from 'react-materialize'
+import {Button, Card, Container, Modal} from 'react-materialize'
 import Axios from 'axios'
 
 class Login extends Component {
@@ -7,7 +7,9 @@ class Login extends Component {
         super()
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            msg: '',
+            modalOpen: false
         }
     }
 
@@ -26,16 +28,29 @@ class Login extends Component {
 
         let data = this.state
 
-        console.log(data)
-
         Axios({
             method: 'post',
             // baseURL: 'http://localhost:3001',
             url: '/api/login',
             data: data
-        }).catch((error) => {
-            console.log(error)
-        }) 
+        }).then((res) => {
+            console.log(res)
+            if (res.data.success === false) {
+                let error = res.data.error
+
+                this.setState({msg: error, modalOpen: true})
+
+                setTimeout(() => {
+                    this.setState({msg: '', modalOpen: false})
+                }, 3000)
+            }
+            else {
+                window.location = '/'
+            }
+        })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     render() {
@@ -43,6 +58,7 @@ class Login extends Component {
             <Container className="center-align">
                 <Card>
                     <h1>Login</h1>
+                    <Modal open={this.state.modalOpen}><h3>{this.state.msg}</h3></Modal>
                     <form>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>

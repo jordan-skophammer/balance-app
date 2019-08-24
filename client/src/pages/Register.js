@@ -47,14 +47,12 @@ class Register extends Component {
                     window.location = '/login'
                 }, 3000) 
             }
-        })
-        .catch((error) => {
+        }).catch((error) => {
             console.log(error)
         }) 
     }
 
     render() {
-
         return (
             <Container>
                 <Card>

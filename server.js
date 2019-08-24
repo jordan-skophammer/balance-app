@@ -37,6 +37,14 @@ app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Global variables
+// app.use(function(req, res, next) {
+//     res.locals.success_msg = req.flash('success_msg');
+//     res.locals.error_msg = req.flash('error_msg');
+//     res.locals.error = req.flash('error');
+//     next();
+// });
+
 // Routes
 router.get("/getData", (req, res) => {
     Data.find((err, data) => {
@@ -123,12 +131,24 @@ router.post('/newUser', (req, res) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-    console.log(req.body)
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login'
+    passport.authenticate('local', (err, user, info) => {
+        
+        if (err == false) {
+            console.log(info)
+            return res.json({success: false, error: info.message})
+        }else if (!user) {
+            console.log(info)
+            return res.json({success: false, error: info.message})
+        }else {
+            return res.redirect('/')
+        }
+    //   req.logIn(user, (err) => {
+    //       if (err) {return next(err)}
+
+    //       return res.redirect('/')
+    //   })
     })(req, res, next)
-  })
+})
   
 // Logout
 router.get('/logout', (req, res) => {
