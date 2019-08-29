@@ -30,7 +30,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.102.0",
+    "flow-bin": "0.106.2",
     "http-proxy-middleware": "^0.19.1"
   }
 }

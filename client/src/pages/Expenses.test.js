@@ -1,7 +1,7 @@
 // import React from 'react'
-import Home from './Home'
+import Expenses from './Expenses'
 
-const numItems = Home.state.length
+const numItems = Expenses.state.length
 
 console.log(numItems)
 
