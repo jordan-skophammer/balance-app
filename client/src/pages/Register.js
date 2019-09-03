@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button, Card, Container, Modal} from 'react-materialize'
 import Axios from 'axios'
+import Nav from "../components/Navbar"
 
 class Register extends Component {
     constructor() {
@@ -54,6 +55,8 @@ class Register extends Component {
 
     render() {
         return (
+        <div>
+            <Nav />
             <Container>
                 <Card>
                     <h1>Register</h1>
@@ -80,6 +83,7 @@ class Register extends Component {
                     <p>Already Registered? <a href="/login">Login</a></p>
                 </Card>
             </Container>
+        </div>
         )
     }
 }

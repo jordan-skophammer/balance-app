@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button, Card, Container, Modal} from 'react-materialize'
 import Axios from 'axios'
+import Nav from '../components/Navbar'
 
 class Login extends Component {
     constructor(){
@@ -45,16 +46,15 @@ class Login extends Component {
                 }, 3000)
             }
             else {
-                window.location = '/'
+                window.location = '/expenses'
             }
         })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
     }
 
     render() {
         return (
+        <div>
+            <Nav />
             <Container className="center-align">
                 <Card>
                     <h1>Login</h1>
@@ -73,6 +73,7 @@ class Login extends Component {
                     <p>No Account? <a href="/register">Register</a></p>
                 </Card>
             </Container>
+        </div>
         )
     }
 }

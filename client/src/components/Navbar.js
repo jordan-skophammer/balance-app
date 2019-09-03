@@ -1,15 +1,20 @@
 import React from 'react';
-import {Navbar, NavItem, Icon} from 'react-materialize';
+import {Navbar, NavItem} from 'react-materialize';
 
 const Nav = () => {
     return (
-        <Navbar>
-            <NavItem>
-                <Icon>Home</Icon>
+        <Navbar brand={<div className="black-text">Welcome</div>} className="white black-text" alignLinks="right">
+            <NavItem className="black-text" href="/" alignLinks="left">
+                Home
+            </NavItem>
+            <NavItem className="black-text" href="/register">
+                Register
+            </NavItem>
+            <NavItem className="black-text" href="/login">
+                Login
             </NavItem>
         </Navbar>
-    )
-     
+    )    
 }
 
 export default Nav

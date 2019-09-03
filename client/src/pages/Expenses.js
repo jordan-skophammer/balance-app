@@ -4,6 +4,7 @@ import { Button, Row, Col} from 'react-materialize'
 import Chart from '../components/Chart'
 import Item from '../components/Item'
 import Axios from 'axios'
+import Nav from '../components/Navbar'
 
 class Expenses extends Component {
 constructor() {
@@ -118,6 +119,8 @@ dynamicColors = () => {
 
 render() {
     return (
+    <div>
+        <Nav />
         <div className="center-align">
             <Row>
                 <h3>Expenses</h3>
@@ -156,6 +159,7 @@ render() {
                 <h3>Total {this.totalSum()}</h3>
             </Row>
         </div>
+    </div>
     )}
 }
 
