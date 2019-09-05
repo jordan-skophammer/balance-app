@@ -6,17 +6,29 @@ import Register from './pages/Register'
 import Expenses from './pages/Expenses'
 
 class App extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: '',
+      loggedIn: false
+    }
+  }
+
+  handler(data) {
+    console.log(data)
+  }
+
   render() {
     return (
       <Router>
         <div>
           <Route exact path="/" render={() => <Home />} />
           <Route path="/expenses" render={() => <Expenses />} />
-          <Route path="/login" render={() => <Login />} />
+          <Route path="/login" render={() => <Login handler={this.handler} />} />
           <Route path="/register" render={() => <Register />} />
         </div>
       </Router>
-    );
+    )
   }
 }
 

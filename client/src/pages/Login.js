@@ -35,7 +35,7 @@ class Login extends Component {
             url: '/api/login',
             data: data
         }).then((res) => {
-            console.log(res)
+            console.log(res.data)
             if (res.data.success === false) {
                 let error = res.data.error
 
@@ -46,6 +46,8 @@ class Login extends Component {
                 }, 3000)
             }
             else {
+                console.log(res.data)
+                // this.props.handler(res)
                 window.location = '/expenses'
             }
         })

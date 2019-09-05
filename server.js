@@ -132,21 +132,14 @@ router.post('/newUser', (req, res) => {
 // Login
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        
+        console.log(user)
         if (err == false) {
-            console.log(info)
-            return res.json({success: false, error: info.message})
+            return res.json({success: true, userName: user.name})
         }else if (!user) {
-            console.log(info)
             return res.json({success: false, error: info.message})
         }else {
             return res.redirect('/')
         }
-    //   req.logIn(user, (err) => {
-    //       if (err) {return next(err)}
-
-    //       return res.redirect('/')
-    //   })
     })(req, res, next)
 })
   

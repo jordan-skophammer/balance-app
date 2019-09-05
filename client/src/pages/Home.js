@@ -6,10 +6,12 @@ class Home extends Component {
 
     render() {
         return (
+        <div>
+            <Nav />
             <div className="center-align">
-                <Nav />
                 <Row><h1>Balance</h1></Row>
             </div>
+        </div>
         )
     }
 }
